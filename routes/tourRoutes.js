@@ -5,16 +5,16 @@ const tourController = require('./../controllers/tourController'); //63
 const router = express.Router();
 
 //64
-router.param('id', tourController.checkID)
+router.param('id', tourController.checkID);
 
-//57, 63
+//57, 63, 65
 router
-  .route(`/`)
+  .route('/')
   .get(tourController.getAllTours)
-  .post(tourController.createTour);
+  .post(tourController.checkBody, tourController.createTour);
 //57, 63
 router
-  .route(`/:id`)
+  .route('/:id')
   .get(tourController.getTour)
   .patch(tourController.updateTour)
   .delete(tourController.deleteTour);

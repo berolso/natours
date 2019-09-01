@@ -8,8 +8,12 @@ const userRouter = require('./routes/userRoutes'); //63
 const app = express();
 
 ////MIDDLEWARES
-//60
-app.use(morgan('dev'));
+//67
+console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === 'development') {
+  //60
+  app.use(morgan('dev'));
+}
 //53
 app.use(express.json());
 //66

@@ -1,10 +1,15 @@
-const fs = require('fs');
-const express = require('express');
+const fs = require('fs'); //52
+const express = require('express'); //52
+const morgan = require('morgan'); //60
 
 //53
 const app = express();
-app.use(express.json());
 
+////MIDDLEWARES
+//60
+app.use(morgan('dev'));
+//53
+app.use(express.json());
 //59
 app.use((req, res, next) => {
   console.log('hello from the middleware');
@@ -12,9 +17,11 @@ app.use((req, res, next) => {
 });
 //59
 app.use((req, res, next) => {
-    req.requestTime = new Date().toISOString();
-    next();
-})
+  req.requestTime = new Date().toISOString();
+  next();
+});
+
+////ROUTE HANDLERS
 //52
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
@@ -43,7 +50,7 @@ const getTour = (req, res) => {
 
 //54, 57
 const getAllTours = (req, res) => {
-    console.log(req.requestTime)
+  console.log(req.requestTime);
   res.status(200).json({
     status: 'success',
     requestedAt: req.requestTime,
@@ -115,6 +122,7 @@ const deleteTour = (req, res) => {
 // app.patch(`/api/v1/tours/:id`, updateTour); //55,
 // app.delete(`/api/v1/tours/:id`, deleteTour); //56,
 
+////ROUTES
 //57
 app
   .route(`/api/v1/tours`)
@@ -127,6 +135,7 @@ app
   .patch(updateTour)
   .delete(deleteTour);
 
+////START SERVER
 //52
 const port = 3000;
 app.listen(port, () => {

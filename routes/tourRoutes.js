@@ -1,5 +1,5 @@
-const express = require("express");
-const tourController = require("./../controllers/tourController"); //63
+const express = require('express');
+const tourController = require('./../controllers/tourController'); //63
 ////ROUTES
 //62,63
 const router = express.Router();
@@ -9,12 +9,12 @@ const router = express.Router();
 
 //57, 63, 65, 88
 router
-  .route("/")
+  .route('/')
   .get(tourController.getAllTours)
   .post(tourController.createTour);
 //57, 63
 router
-  .route("/:id")
+  .route('/:id')
   .get(tourController.getTour)
   .patch(tourController.updateTour)
   .delete(tourController.deleteTour);

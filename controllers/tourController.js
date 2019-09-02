@@ -80,10 +80,19 @@ exports.updateTour = async (req, res) => {
     });
   }
 };
-//56, 57, 63
-exports.deleteTour = (req, res) => {
-  res.status(204).json({
-    status: 'sucess',
-    data: null
-  });
+//56, 57, 63, 91
+exports.deleteTour = async (req, res) => {
+  try {
+    await Tour.findByIdAndDelete(req.params.id);
+
+    res.status(204).json({
+      status: 'sucess',
+      data: null
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err
+    });
+  }
 };

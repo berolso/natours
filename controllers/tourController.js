@@ -1,29 +1,42 @@
 const Tour = require('./../models/tourModel'); //87
 
-//52, 57, 63, 64, 87
-exports.getTour = (req, res) => {
-  console.log(req.params);
-  const id = req.params.id * 1;
-  // const tour = tours.find(el => el.id === id);
-
-  // res.status(200).json({
-  //   status: 'success',
-  //   data: {
-  //     tour
-  //   }
-  // });
+//52, 57, 63, 64, 87, 89
+exports.getTour = async (req, res) => {
+  //89
+  try {
+    const tour = await Tour.findById(req.params.id);
+    //Tour.findOne({ _id: req.params.id})
+    res.status(200).json({
+      status: 'success',
+      data: {
+        tour
+      }
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err
+    });
+  } // res.status(200).json({
 };
-//54, 57, 63, 87
-exports.getAllTours = (req, res) => {
-  console.log(req.requestTime);
-  res.status(200).json({
-    status: 'success'
-    // requestedAt: req.requestTime,
-    // results: tours.length,
-    // data: {
-    //   tours
-    // }
-  });
+//54, 57, 63, 87, 89
+exports.getAllTours = async (req, res) => {
+  //89
+  try {
+    const tours = await Tour.find();
+    res.status(200).json({
+      status: 'success',
+      results: tours.length,
+      data: {
+        tours
+      }
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err
+    });
+  }
 };
 //53, 57, 63, 87, 88
 exports.createTour = async (req, res) => {

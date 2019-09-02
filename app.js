@@ -9,7 +9,7 @@ const app = express();
 
 ////MIDDLEWARES
 //67
-console.log(process.env.NODE_ENV)
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'development') {
   //60
   app.use(morgan('dev'));

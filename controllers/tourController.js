@@ -80,13 +80,13 @@ exports.createTour = async (req, res) => {
   }
 };
 
-//55, 57, 63, 64, 90
+//55, 57, 63, 64, 90, 107
 exports.updateTour = async (req, res) => {
   try {
     //90
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-      runValidators: true
+      runValidators: true //107
     });
     res.status(200).json({
       status: 'sucess',

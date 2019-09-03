@@ -14,6 +14,8 @@ router
 
 //101
 router.route('/tour-stats').get(tourController.getTourStats);
+//102
+router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 //57, 63, 65, 88
 router

@@ -1,6 +1,8 @@
 const express = require('express'); //52
 const morgan = require('morgan'); //60
 
+const AppError = require('./utils/appError'); //114
+const globalErrorHandler = require('./controllers/errorController'); //114
 const tourRouter = require('./routes/tourRoutes'); //63
 const userRouter = require('./routes/userRoutes'); //63
 
@@ -33,29 +35,15 @@ app.use('/api/v1/users', userRouter);
 
 //111
 app.all('*', (req, res, next) => {
-//   res.status(404).json({
-//     status: 'fail',
-//     message: `Can't find ${req.originalUrl} on this server`
-//   });
-// });
-//113
-const err = new Error(`Cant find ${req.originalUrl} on this server:`);
-err.status = 'fail';
-err.statusCode = 404;
+  // //113
+  // const err = new Error(`Cant find ${req.originalUrl} on this server:`);
+  // err.status = 'fail';
+  // err.statusCode = 404;
 
-next(err);
-
-//113
-app.use((err, req, res, next) => {
-    err.statusCode = err.statusCode || 500;
-    err.status = err.status || 'error'
-    
-    
-    res.tatus(err.statusCode).json({
-        status: err.status,
-        message: err.message
-    })
+  next(new AppError(`Cant find ${req.originalUrl} on this server:`, 404));
 });
+//113
+app.use(globalErrorHandler);
 
 //63
 module.exports = app;

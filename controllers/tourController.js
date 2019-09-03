@@ -1,5 +1,5 @@
 const Tour = require('./../models/tourModel'); //87
-const APIFeatures = require('./../utils/apiFeatures');
+const APIFeatures = require('./../utils/apiFeatures'); //100;
 
 //99
 exports.aliasTopTours = (req, res, next) => {
@@ -110,6 +110,45 @@ exports.deleteTour = async (req, res) => {
     res.status(204).json({
       status: 'sucess',
       data: null
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err
+    });
+  }
+};
+
+//101
+exports.getTourStats = async (req, res) => {
+  try {
+    const stats = await Tour.aggregate([
+      {
+        $match: { ratingsAverage: { $gte: 4.5 } }
+      },
+      {
+        $group: {
+          _id: { $toUpper: '$difficulty' },
+          numTours: { $sum: 1 },
+          numRatings: { $sum: '$ratingsQuantity' },
+          avgRating: { $avg: '$ratingsAverage' },
+          avgPrice: { $avg: '$price' },
+          minPrice: { $min: '$price' },
+          maxPrice: { $max: '$price' }
+        }
+      },
+      {
+        $sort: { avgPrice: -1 }
+      }
+      // {
+      //   $match: { _id: { $ne: 'EASY' } }
+      // }
+    ]);
+    res.status(200).json({
+      status: 'sucess',
+      data: {
+        stats
+      }
     });
   } catch (err) {
     res.status(404).json({

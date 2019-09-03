@@ -7,6 +7,11 @@ const router = express.Router();
 //64
 // router.param('id', tourController.checkID);
 
+//99
+router
+  .route('/top-5-cheap')
+  .get(tourController.aliasTopTours, tourController.getAllTours);
+
 //57, 63, 65, 88
 router
   .route('/')

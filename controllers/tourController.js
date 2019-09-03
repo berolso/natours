@@ -19,11 +19,24 @@ exports.getTour = async (req, res) => {
     });
   } // res.status(200).json({
 };
-//54, 57, 63, 87, 89
+//54, 57, 63, 87, 89, 94
 exports.getAllTours = async (req, res) => {
   //89
   try {
-    const tours = await Tour.find();
+    //94
+    //BUILD QUERY
+    const queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach(e => delete queryObj[e]);
+    const query = await Tour.find(queryObj);
+    // const query = Tour.find()
+    //   .where('duration')
+    //   .equals('5')
+    //   .where('difficulty')
+    //   .equals('easy');
+    //EXECUTE QUERY
+    const tours = await query;
+    //SEND RESPONSE
     res.status(200).json({
       status: 'success',
       results: tours.length,

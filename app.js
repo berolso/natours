@@ -19,11 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 //66
 app.use(express.static(`${__dirname}/public`));
-//59
-app.use((req, res, next) => {
-  console.log('hello from the middleware');
-  next();
-});
+
 //59
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
@@ -34,5 +30,13 @@ app.use((req, res, next) => {
 //62
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+
+//111
+app.all('*', (req, res, next) => {
+  res.status(404).json({
+    status: 'fail',
+    message: `Can't find ${req.originalUrl} on this server`
+  });
+});
 //63
 module.exports = app;

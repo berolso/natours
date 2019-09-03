@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'); //82
 const slugify = require('slugify'); //104
 
-//84
+//84, 104, 105
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -55,7 +55,11 @@ const tourSchema = new mongoose.Schema(
       default: Date.now(),
       select: false
     },
-    startDates: [Date]
+    startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: false
+    }
   },
   //103 virtual properties
   {
@@ -86,6 +90,20 @@ tourSchema.pre('save', function(next) {
 //   next();
 // });
 
+//QUERY MIDDLEWARE //105
+// tourSchema.pre('find', function(next) {
+tourSchema.pre(/^find/, function(next) {
+  this.find({ secretTour: { $ne: true } });
+
+  this.start = Date.now();
+  next();
+});
+//105
+tourSchema.post(/^find/, function(docs, next) {
+  console.log(`Query took ${Date.now() - this.start} milliseconds`);
+  console.log(docs);
+  next();
+});
 //84
 const Tour = mongoose.model('Tour', tourSchema);
 

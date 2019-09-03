@@ -1,6 +1,7 @@
 const Tour = require('./../models/tourModel'); //87
 const APIFeatures = require('./../utils/apiFeatures'); //100;
 const catchAsync = require('./../utils/catchAsync'); //115
+const AppError = require('./../utils/appError'); //116
 
 //99
 exports.aliasTopTours = (req, res, next) => {
@@ -31,10 +32,14 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
   });
 });
 
-//52, 57, 63, 64, 87, 89, 115
+//52, 57, 63, 64, 87, 89, 115, 116
 exports.getTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.id);
   //Tour.findOne({ _id: req.params.id})
+  //116
+  if (!tour) {
+    return next(new AppError('No tou found with that ID', 404));
+  }
   res.status(200).json({
     status: 'success',
     data: {
@@ -55,12 +60,17 @@ exports.createTour = catchAsync(async (req, res, next) => {
   });
 });
 
-//55, 57, 63, 64, 90, 107, 115
+//55, 57, 63, 64, 90, 107, 115, 116
 exports.updateTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true //107
   });
+  //116
+  if (!tour) {
+    return next(new AppError('No tou found with that ID', 404));
+  }
+
   res.status(200).json({
     status: 'sucess',
     data: {
@@ -69,9 +79,13 @@ exports.updateTour = catchAsync(async (req, res, next) => {
   });
 });
 
-//56, 57, 63, 91, 115
+//56, 57, 63, 91, 115, 116
 exports.deleteTour = catchAsync(async (req, res, next) => {
-  await Tour.findByIdAndDelete(req.params.id);
+  const tour = await Tour.findByIdAndDelete(req.params.id);
+  //116
+  if (!tour) {
+    return next(new AppError('No tou found with that ID', 404));
+  }
 
   res.status(204).json({
     status: 'sucess',

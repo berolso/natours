@@ -1,7 +1,8 @@
 const mongoose = require('mongoose'); //82
 const slugify = require('slugify'); //104
+// const validator = require('validator'); //108
 
-//84, 104, 105, 107
+//84, 104, 105, 107, 108
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -11,6 +12,7 @@ const tourSchema = new mongoose.Schema(
       trim: true,
       maxlength: [40, 'A tour name must less than 40 characters'],
       minlength: [10, 'A tour name must have at least 10 characters']
+      //   validate: [validator.isAlpha, 'Tour name must only contain characters']
     },
     slug: String,
     duration: {
@@ -25,8 +27,9 @@ const tourSchema = new mongoose.Schema(
       type: String,
       required: [true, 'A tour must have a difficulty'],
       enum: {
-          values: ['easy', 'medium', 'difficult'],
-          message: 'Difficulty is either: easy, medium, difficult'
+        values: ['easy', 'medium', 'difficult'],
+        message: 'Difficulty is either: easy, medium, difficult'
+      }
     },
     ratingsAverage: {
       type: Number,
@@ -42,7 +45,17 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'A tour must have a price']
     },
-    priceDiscount: Number,
+    priceDiscount: {
+      //108
+      type: Number,
+      validate: {
+        validator: function(val) {
+          // this only points to current doc on NEW document creation
+          return val < this.price;
+        },
+        message: 'Discount price ({VALUE}) should be below regular price'
+      }
+    },
     summary: {
       type: String,
       trim: true,
@@ -68,8 +81,8 @@ const tourSchema = new mongoose.Schema(
       default: false
     }
   },
-  //103 virtual properties
   {
+    //103 virtual properties
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
   }

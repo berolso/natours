@@ -23,11 +23,15 @@ router
   .route('/')
   .get(authController.protect, tourController.getAllTours)
   .post(tourController.createTour);
-//57, 63
+//57, 63, 133
 router
   .route('/:id')
   .get(tourController.getTour)
   .patch(tourController.updateTour)
-  .delete(tourController.deleteTour);
+  .delete(
+    authController.protect, //133
+    authController.restrictTo('admin', 'lead-guide'), //133
+    tourController.deleteTour
+  );
 //63
 module.exports = router;

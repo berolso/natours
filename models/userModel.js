@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); //124
 const validator = require('validator'); //124
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs'); //126
 
 //124
 const userSchema = new mongoose.Schema({
@@ -33,7 +33,8 @@ const userSchema = new mongoose.Schema({
       },
       message: 'Passwords are not the same'
     }
-  }
+  },
+  passwordChangedAt: Date //131
 });
 
 //126
@@ -53,6 +54,19 @@ userSchema.methods.correctPassword = async function(
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+//131
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return JWTTimestamp < changedTimestamp;
+  }
+  //false means not changed
+  return false;
 };
 
 //124

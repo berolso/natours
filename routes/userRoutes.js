@@ -9,6 +9,10 @@ const router = express.Router();
 router.post('/signup', authController.signup);
 //129
 router.post('/login', authController.login);
+//134
+router.post('/forgotPassword', authController.forgotPassword);
+//134
+router.post('/resetPassword', authController.resetPassword);
 //61, 63
 router
   .route(`/`)

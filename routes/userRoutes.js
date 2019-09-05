@@ -7,6 +7,8 @@ const router = express.Router();
 
 //125
 router.post('/signup', authController.signup);
+//129
+router.post('/login', authController.login);
 //61, 63
 router
   .route(`/`)

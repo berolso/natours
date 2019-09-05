@@ -11,8 +11,8 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 //134
 router.post('/forgotPassword', authController.forgotPassword);
-//134
-router.post('/resetPassword', authController.resetPassword);
+//134, 135
+router.patch('/resetPassword/:token', authController.resetPassword);
 //61, 63
 router
   .route(`/`)

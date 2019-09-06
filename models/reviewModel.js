@@ -18,12 +18,12 @@ const reviewSchema = new mongoose.Schema(
     },
     tour: {
       type: mongoose.Schema.ObjectId,
-      ref: 'tour',
+      ref: 'Tour',
       required: [true, 'Review must belong to a tour.']
     },
     user: {
       type: mongoose.Schema.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: [true, 'Review must belong to a user.']
     }
   },
@@ -32,8 +32,21 @@ const reviewSchema = new mongoose.Schema(
     toObject: { virtuals: true }
   }
 );
+
+//query middleware
+//155
+reviewSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'tour',
+    select: 'name'
+  }).populate({
+    path: 'user',
+    select: 'name'
+  });
+  next();
+});
+
 //153
 const Review = mongoose.model('Review', reviewSchema);
 //153
 module.exports = Review;
-

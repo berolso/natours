@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); //82
 const slugify = require('slugify'); //104
-const User = require('./userModel'); //150
+// const User = require('./userModel'); //150
 // const validator = require('validator'); //108
 
 //84, 104, 105, 107, 108
@@ -104,8 +104,13 @@ const tourSchema = new mongoose.Schema(
         description: String,
         day: Number
       }
-    ], //150
-    guides: Array
+    ], //150, 151
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+      }
+    ]
   },
   {
     //103 virtual properties
@@ -125,12 +130,12 @@ tourSchema.pre('save', function(next) {
   next();
 });
 
-//150
-tourSchema.pre('save', async function(next) {
-  const guidesPromises = this.guides.map(async id => User.findById(id));
-  this.guides = await Promise.all(guidesPromises);
-  next();
-});
+// //150 embedding
+// tourSchema.pre('save', async function(next) {
+//   const guidesPromises = this.guides.map(async id => User.findById(id));
+//   this.guides = await Promise.all(guidesPromises);
+//   next();
+// });
 
 // //104
 // tourSchema.pre('save', function(next) {

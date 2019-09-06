@@ -38,7 +38,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
   //Tour.findOne({ _id: req.params.id})
   //116
   if (!tour) {
-    return next(new AppError('No tou found with that ID', 404));
+    return next(new AppError('No tour found with that ID', 404));
   }
   res.status(200).json({
     status: 'success',

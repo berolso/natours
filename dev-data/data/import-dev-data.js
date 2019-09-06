@@ -21,10 +21,8 @@ mongoose
   .then(() => console.log('DB connection successful'));
 
 //READ JSON FILE
-//93
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
-);
+//93, 149
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 
 //IMPORT DATA INTO DB
 //93

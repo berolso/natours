@@ -9,10 +9,19 @@ const router = express.Router();
 router.post('/signup', authController.signup);
 //129
 router.post('/login', authController.login);
+
 //134
 router.post('/forgotPassword', authController.forgotPassword);
 //134, 135
 router.patch('/resetPassword/:token', authController.resetPassword);
+
+//137
+router.patch(
+  '/updateMyPassword',
+  authController.protect,
+  authController.updatePassword
+);
+
 //61, 63
 router
   .route(`/`)

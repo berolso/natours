@@ -1,5 +1,4 @@
 const Tour = require('./../models/tourModel'); //87
-const APIFeatures = require('./../utils/apiFeatures'); //100;
 const catchAsync = require('./../utils/catchAsync'); //115
 const AppError = require('./../utils/appError'); //116
 const factory = require('./handlerFactory'); //160
@@ -12,42 +11,46 @@ exports.aliasTopTours = (req, res, next) => {
   next();
 };
 
-//54, 57, 63, 87, 89, 94, 95, 100, 115
-exports.getAllTours = catchAsync(async (req, res, next) => {
-  //EXECUTE QUERY
-  //100
-  const features = new APIFeatures(Tour.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .Paginate();
-  const tours = await features.query;
+//162
+exports.getAllTours = factory.getAll(Tour);
+// //54, 57, 63, 87, 89, 94, 95, 100, 115
+// exports.getAllTours = catchAsync(async (req, res, next) => {
+//   //EXECUTE QUERY
+//   //100
+//   const features = new APIFeatures(Tour.find(), req.query)
+//     .filter()
+//     .sort()
+//     .limitFields()
+//     .Paginate();
+//   const tours = await features.query;
 
-  //SEND RESPONSE
-  res.status(200).json({
-    status: 'success',
-    results: tours.length,
-    data: {
-      tours
-    }
-  });
-});
+//   //SEND RESPONSE
+//   res.status(200).json({
+//     status: 'success',
+//     results: tours.length,
+//     data: {
+//       tours
+//     }
+//   });
+// });
 
-//52, 57, 63, 64, 87, 89, 115, 116, 156
-exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate('reviews');
-  //Tour.findOne({ _id: req.params.id})
-  //116
-  if (!tour) {
-    return next(new AppError('No tour found with that ID', 404));
-  }
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour
-    }
-  });
-});
+//162
+exports.getTour = factory.getOne(Tour, { path: 'reviews' });
+// //52, 57, 63, 64, 87, 89, 115, 116, 156
+// exports.getTour = catchAsync(async (req, res, next) => {
+//   const tour = await Tour.findById(req.params.id).populate('reviews');
+//   //Tour.findOne({ _id: req.params.id})
+//   //116
+//   if (!tour) {
+//     return next(new AppError('No tour found with that ID', 404));
+//   }
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       tour
+//     }
+//   });
+// });
 
 //161
 exports.createTour = factory.createOne(Tour);

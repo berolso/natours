@@ -11,18 +11,22 @@ const router = express.Router({ mergeParams: true });
 //post /tour/id:saldkjfa/reveiws
 //post /reviews
 
-//154
+//154, 161
 router
   .route('/')
   .get(reviewController.getAllReviews)
   .post(
     authController.protect,
     authController.restrictTo('user'),
+    reviewController.setTourUserIds,
     reviewController.createReview
   );
 
-//160
-router.route('/:id').delete(reviewController.deleteReview);
+//160, 161
+router
+  .route('/:id')
+  .patch(reviewController.updateReview)
+  .delete(reviewController.deleteReview);
 
 //154
 module.exports = router;

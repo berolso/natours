@@ -1,11 +1,13 @@
 const Review = require('./../models/reviewModel'); //154
 const catchAsync = require('./../utils/catchAsync'); //154
 
-//154
+//154, 159
 exports.getAllReviews = catchAsync(async (req, res, next) => {
+  let filter = {};
+  if (req.params.tourId) filter = { tour: req.params.tourId };
   // const features = new APIFeatures(Review.find(), req.query);
   // const reviews = await features.query;
-  const reviews = await Review.find();
+  const reviews = await Review.find(filter);
   res.status(200).json({
     status: 'success',
     results: reviews.length,

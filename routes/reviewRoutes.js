@@ -4,8 +4,12 @@ const authController = require('./../controllers/authController'); //1154
 
 //routes
 
-//154
-const router = express.Router();
+//154, 158
+const router = express.Router({ mergeParams: true });
+
+//158
+//post /tour/id:saldkjfa/reveiws
+//post /reviews
 
 //154
 router

@@ -2,6 +2,7 @@ const Tour = require('./../models/tourModel'); //87
 const APIFeatures = require('./../utils/apiFeatures'); //100;
 const catchAsync = require('./../utils/catchAsync'); //115
 const AppError = require('./../utils/appError'); //116
+const factory = require('./handlerFactory'); //160
 
 //99
 exports.aliasTopTours = (req, res, next) => {
@@ -79,19 +80,21 @@ exports.updateTour = catchAsync(async (req, res, next) => {
   });
 });
 
-//56, 57, 63, 91, 115, 116
-exports.deleteTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findByIdAndDelete(req.params.id);
-  //116
-  if (!tour) {
-    return next(new AppError('No tou found with that ID', 404));
-  }
+//160
+exports.deleteTour = factory.deleteOne(Tour);
+// //56, 57, 63, 91, 115, 116
+// exports.deleteTour = catchAsync(async (req, res, next) => {
+//   const tour = await Tour.findByIdAndDelete(req.params.id);
+//   //116
+//   if (!tour) {
+//     return next(new AppError('No tou found with that ID', 404));
+//   }
 
-  res.status(204).json({
-    status: 'sucess',
-    data: null
-  });
-});
+//   res.status(204).json({
+//     status: 'sucess',
+//     data: null
+//   });
+// });
 
 //101, 115
 exports.getTourStats = catchAsync(async (req, res, next) => {

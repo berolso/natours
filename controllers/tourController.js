@@ -32,9 +32,9 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
   });
 });
 
-//52, 57, 63, 64, 87, 89, 115, 116
+//52, 57, 63, 64, 87, 89, 115, 116, 156
 exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id);
+  const tour = await Tour.findById(req.params.id).populate('reviews');
   //Tour.findOne({ _id: req.params.id})
   //116
   if (!tour) {

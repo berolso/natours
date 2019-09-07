@@ -124,6 +124,13 @@ tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
 
+//156 virtual populate
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id'
+});
+
 // DOCUMENT MIDDLEWARE: runs before .save() and .create() //104
 tourSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
@@ -160,12 +167,12 @@ tourSchema.pre(/^find/, function(next) {
 
 //152
 tourSchema.pre(/^find/, function(next) {
-this.populate({
-  path: 'guides',
-  select: '-__v -passwordChangedAt'
-});
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt'
+  });
   next();
-})
+});
 
 //105
 tourSchema.post(/^find/, function(docs, next) {

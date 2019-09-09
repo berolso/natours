@@ -15,25 +15,22 @@ router.post('/forgotPassword', authController.forgotPassword);
 //134, 135
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-//137
-router.patch(
-  '/updateMyPassword',
-  authController.protect,
-  authController.updatePassword
-);
+//164
+router.use(authController.protect);
 
-//163
-router.get(
-  '/me',
-  authController.protect,
-  userController.getMe,
-  userController.getUser
-);
+//137, 164
+router.patch('/updateMyPassword', authController.updatePassword);
 
-//138
-router.patch('/updateMe', authController.protect, userController.updateMe);
-//139
-router.delete('/deleteMe', authController.protect, userController.deleteMe);
+//163, 164
+router.get('/me', userController.getMe, userController.getUser);
+
+//138, 164
+router.patch('/updateMe', userController.updateMe);
+//139, 164
+router.delete('/deleteMe', userController.deleteMe);
+
+//164
+router.use(authController.restrictTo('admin'));
 
 //61, 63
 router

@@ -69,7 +69,7 @@ exports.getOne = (Model, popOptions) =>
     });
   });
 
-//162
+//162, 166
 exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
     //to allow for nested get reviews on tour 154, 159
@@ -83,6 +83,7 @@ exports.getAll = Model =>
       .limitFields()
       .Paginate();
     const doc = await features.query;
+    // const doc = await features.query.explain(); //166
 
     //SEND RESPONSE
     res.status(200).json({

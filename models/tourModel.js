@@ -3,7 +3,7 @@ const slugify = require('slugify'); //104
 // const User = require('./userModel'); //150
 // const validator = require('validator'); //108
 
-//84, 104, 105, 107, 108
+//84, 104, 105, 107, 108, 169
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -36,7 +36,9 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       default: 4.5,
       min: [1, 'Rating must be a bove 1.0'],
-      max: [5, 'Rating must be below 5.0']
+      max: [5, 'Rating must be below 5.0'],
+      //169
+      set: val => Math.round(val * 10) / 10
     },
     ratingsQuantity: {
       type: Number,

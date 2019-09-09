@@ -34,6 +34,9 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+//169
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
 //query middleware
 
 //155, 156

@@ -196,6 +196,17 @@ tourSchema.post(/^find/, function(docs, next) {
 //   next();
 // });
 
+//171 comments solution to keep secret tours hidden functionality
+tourSchema.pre('aggregate', function(next) {
+  // Hide secret tours if geoNear is NOT used
+  if (!(this.pipeline().length > 0 && '$geoNear' in this.pipeline()[0])) {
+    this.pipeline().unshift({
+      $match: { secretTour: { $ne: true } }
+    });
+  }
+  next();
+});
+
 //84
 const Tour = mongoose.model('Tour', tourSchema);
 

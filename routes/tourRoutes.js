@@ -41,6 +41,9 @@ router
 // /tours-within?distance=233&center=-40,45&unit=mi
 // /tours-within/233/center/-40,45/unit/mi
 
+//171
+router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
+
 //57, 63, 65, 88, 130, 164
 router
   .route('/')

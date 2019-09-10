@@ -39,7 +39,7 @@ reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 //query middleware
 
-//155, 156
+//155, 156, 184
 reviewSchema.pre(/^find/, function(next) {
   //   this.populate({
   //     path: 'tour',
@@ -50,7 +50,7 @@ reviewSchema.pre(/^find/, function(next) {
   //   });
   this.populate({
     path: 'user',
-    select: 'name'
+    select: ['name', 'photo']
   });
   next();
 });

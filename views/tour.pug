@@ -2,10 +2,10 @@
 
 extends base 
 include _reviewCard
-//- 185
+//- 185, 186
 block append head
-    //- script(src='/js/mapbox.js')
-
+    script(src='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js')
+    link(href='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet')
 
 
 mixin overviewBox(label, text, icon)
@@ -73,7 +73,7 @@ block content
 
     //- 185
     section.section-map
-    #map(data-locations=`${JSON.stringify(tour.locations)}`)
+        #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
     section.section-reviews
         .reviews

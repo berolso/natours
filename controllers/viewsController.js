@@ -14,7 +14,7 @@ exports.getOverview = catchAsync(async (req, res) => {
   });
 });
 
-//180
+//180, 185
 exports.getTour = catchAsync(async (req, res) => {
   //1 get data for requested tour (including reviews and guides)
   const tour = await Tour.findOne({ slug: req.params.slug }).populate({
@@ -25,7 +25,7 @@ exports.getTour = catchAsync(async (req, res) => {
 
   //3 render template using data from step 1
   res.status(200).render('tour', {
-    title: '',
+    title: `${tour.name} Tour`,
     tour
   });
 });

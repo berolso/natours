@@ -9,6 +9,8 @@ const router = express.Router();
 router.post('/signup', authController.signup);
 //129
 router.post('/login', authController.login);
+//191
+router.get('/logout', authController.logout);
 
 //134
 router.post('/forgotPassword', authController.forgotPassword);

@@ -1,12 +1,14 @@
 //190
 import '@babel/polyfill'; //190
 import { displayMap } from './mapbox'; //190
-import { login } from './login'; //190
+import { login, logout } from './login'; //190
 
 //dom elements
 // 190
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form');
+//191
+const logOutBtn = document.querySelector('.nav__el--logout');
 
 //deligation
 //185, 190
@@ -24,3 +26,6 @@ if (loginForm) {
     login(email, password);
   });
 }
+
+//191
+if (logOutBtn) logOutBtn.addEventListener('click', logout);

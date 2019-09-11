@@ -13,6 +13,7 @@ const tourRouter = require('./routes/tourRoutes'); //63
 const userRouter = require('./routes/userRoutes'); //63
 const reviewRouter = require('./routes/reviewRoutes'); //154
 const viewRouter = require('./routes/viewRoutes'); //180
+const cookieParser = require('cookie-parser'); //188
 
 //53
 const app = express();
@@ -45,6 +46,7 @@ app.use('/api', limiter);
 
 //53, 143 body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser()); //188
 
 //144 data sanitization against NoSQL query injection
 app.use(mongoSanitize());
@@ -73,6 +75,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //59 test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
+  console.log(req.cookies)//188
   next();
 });
 

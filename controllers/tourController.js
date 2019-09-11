@@ -1,7 +1,39 @@
+const multer = require('multer'); //203
+const sharp = require('sharp'); //203
 const Tour = require('./../models/tourModel'); //87
 const catchAsync = require('./../utils/catchAsync'); //115
 const AppError = require('./../utils/appError'); //116, 170
 const factory = require('./handlerFactory'); //160
+
+//203
+//201
+const multerStorage = multer.memoryStorage();
+//199
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image! Please upload only images.', 400), false);
+  }
+};
+//199
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+});
+//203
+exports.uploadTourImages = upload.fields([
+  { name: 'imageCover', maxCount: 1 },
+  { name: 'images', maxCount: 3 }
+]);
+// upload.single('image') req.file
+// upload.array('images', 5) req.files
+
+//203
+exports.resizeTourImages = (req, res, next) => {
+  console.log(req.files);
+  next();
+};
 
 //99
 exports.aliasTopTours = (req, res, next) => {

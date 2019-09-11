@@ -53,13 +53,15 @@ router
     authController.restrictTo('admin', 'lead-guide'),
     tourController.createTour
   ); //164
-//57, 63, 133, 164
+//57, 63, 133, 164, 203
 router
   .route('/:id')
   .get(tourController.getTour)
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
+    tourController.uploadTourImages,
+    tourController.resizeTourImages,
     tourController.updateTour
   ) //164
   .delete(

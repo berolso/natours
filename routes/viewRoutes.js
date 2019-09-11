@@ -11,4 +11,7 @@ router.get('/', viewsController.getOverview);
 //179, 180, 183
 router.get('/tour/:slug', viewsController.getTour);
 
+//187
+router.get('/login', viewsController.getLoginForm);
+
 module.exports = router;

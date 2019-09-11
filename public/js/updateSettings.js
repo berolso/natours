@@ -17,6 +17,10 @@ export const updateSettings = async (data, type) => {
     });
     if (res.data.status === 'success') {
       showAlert('success', `${type.toUpperCase()} updated successfully`);
+      //202 comments edit
+      window.setTimeout(() => {
+        location.reload(true);
+      }, 100);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);

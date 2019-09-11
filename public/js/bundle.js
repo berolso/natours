@@ -8521,7 +8521,11 @@ function () {
             res = _context.sent;
 
             if (res.data.status === 'success') {
-              (0, _alerts.showAlert)('success', "".concat(type.toUpperCase(), " updated successfully"));
+              (0, _alerts.showAlert)('success', "".concat(type.toUpperCase(), " updated successfully")); //202 comments edit
+
+              window.setTimeout(function () {
+                location.reload(true);
+              }, 100);
             }
 
             _context.next = 11;
@@ -8843,16 +8847,16 @@ if (loginForm) {
 } //191
 
 
-if (logOutBtn) logOutBtn.addEventListener('click', _login.logout); //195, 196
+if (logOutBtn) logOutBtn.addEventListener('click', _login.logout); //195, 196, 202
 
 if (userDataForm) userDataForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  var email = document.getElementById('email').value;
-  var name = document.getElementById('name').value;
-  (0, _updateSettings.updateSettings)({
-    name: name,
-    email: email
-  }, 'data');
+  e.preventDefault(); //202
+
+  var form = new FormData();
+  form.append('name', document.getElementById('name').value);
+  form.append('email', document.getElementById('email').value);
+  form.append('photo', document.getElementById('photo').files[0]);
+  (0, _updateSettings.updateSettings)(form, 'data');
 }); //196
 
 if (userPasswordForm) userPasswordForm.addEventListener('submit',

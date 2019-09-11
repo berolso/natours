@@ -2,7 +2,7 @@
 import '@babel/polyfill'; //190
 import { displayMap } from './mapbox'; //190
 import { login, logout } from './login'; //190
-import { updateData } from './updateSettings'; //195
+import { updateSettings } from './updateSettings'; //195, 196
 
 //dom elements
 // 190
@@ -10,6 +10,7 @@ const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login'); //194
 const logOutBtn = document.querySelector('.nav__el--logout'); //191
 const userDataForm = document.querySelector('.form-user-data'); //195
+const userPasswordForm = document.querySelector('.form-user-password'); //196
 
 //deligation
 //185, 190
@@ -31,11 +32,29 @@ if (loginForm) {
 //191
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
 
-//195
+//195, 196
 if (userDataForm)
   userDataForm.addEventListener('submit', e => {
     e.preventDefault();
     const email = document.getElementById('email').value;
     const name = document.getElementById('name').value;
-    updateData(name, email);
+    updateSettings({ name, email }, 'data');
+  });
+
+//196
+if (userPasswordForm)
+  userPasswordForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    document.querySelector('.btn--save-password').textContent = 'Updating...';
+    const passwordCurrent = document.getElementById('password-current').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+    await updateSettings(
+      { passwordCurrent, password, passwordConfirm },
+      'password'
+    );
+    document.querySelector('.btn--save-password').textContent = 'Save password';
+    document.getElementById('password-current').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('password-confirm').value = '';
   });

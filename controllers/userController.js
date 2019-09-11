@@ -1,20 +1,24 @@
 const multer = require('multer'); //199
+const sharp = require('sharp'); //201
 const User = require('./../models/userModel'); //129
 const catchAsync = require('./../utils/catchAsync'); //129
 const AppError = require('./../utils/appError'); //138
 const factory = require('./handlerFactory'); //160
 
-//199
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/img/users');
-  },
-  filename: (req, file, cb) => {
-    //user-34523523525-232423423423.jpeg
-    const ext = file.mimetype.split('/')[1];
-    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
-  }
-});
+// //199
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'public/img/users');
+//   },
+//   filename: (req, file, cb) => {
+//     //user-34523523525-232423423423.jpeg
+//     const ext = file.mimetype.split('/')[1];
+//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+//   }
+// });
+//201
+const multerStorage = multer.memoryStorage();
+
 //199
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
@@ -31,6 +35,21 @@ const upload = multer({
 
 //199
 exports.uploadUserPhoto = upload.single('photo');
+
+//201
+exports.resizeUserPhoto = (req, res, next) => {
+  if (!req.file) return next();
+
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+  sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/users/${req.file.filename}`);
+
+  next();
+};
 
 //138
 const filterObj = (obj, ...allowedFields) => {

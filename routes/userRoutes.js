@@ -27,10 +27,11 @@ router.patch('/updateMyPassword', authController.updatePassword);
 //163, 164
 router.get('/me', userController.getMe, userController.getUser);
 
-//138, 164, 198, 199
+//138, 164, 198, 199, 201
 router.patch(
   '/updateMe',
   userController.uploadUserPhoto,
+  userController.resizeUserPhoto,
   userController.updateMe
 );
 //139, 164

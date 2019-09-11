@@ -112,6 +112,9 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   //grant access to protecte route
   req.user = currentUser;
+  //193
+  res.locals.user = currentUser;
+
   next();
 });
 

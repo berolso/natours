@@ -6,16 +6,16 @@ const router = express.Router(); //180
 
 ////ROUTES
 
-//188, 189
-router.use(authController.isLoggedIn);
+//179, 180, 193
+router.get('/', authController.isLoggedIn, viewsController.getOverview);
 
-//179, 180
-router.get('/', viewsController.getOverview);
+//179, 180, 183, 188, 189, 193
+router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
 
-//179, 180, 183, 188, 189
-router.get('/tour/:slug', viewsController.getTour);
+//187, 193
+router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
 
-//187
-router.get('/login', viewsController.getLoginForm);
+//193
+router.get('/me', authController.protect, viewsController.getAccount);
 
 module.exports = router;

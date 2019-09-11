@@ -8743,7 +8743,8 @@ var _login = require("./login");
 //dom elements
 // 190
 var mapBox = document.getElementById('map');
-var loginForm = document.querySelector('.form'); //191
+var loginForm = document.querySelector('.form--login'); //194
+//191
 
 var logOutBtn = document.querySelector('.nav__el--logout'); //deligation
 //185, 190

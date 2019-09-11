@@ -18,4 +18,11 @@ router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
 //193
 router.get('/me', authController.protect, viewsController.getAccount);
 
+//194
+router.post(
+  '/submit-user-data',
+  authController.protect,
+  viewsController.updateUserData
+);
+
 module.exports = router;

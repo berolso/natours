@@ -12,6 +12,7 @@ const globalErrorHandler = require('./controllers/errorController'); //114
 const tourRouter = require('./routes/tourRoutes'); //63
 const userRouter = require('./routes/userRoutes'); //63
 const reviewRouter = require('./routes/reviewRoutes'); //154
+const bookingRouter = require('./routes/bookingRoutes'); //210
 const viewRouter = require('./routes/viewRoutes'); //180
 const cookieParser = require('cookie-parser'); //188
 
@@ -88,6 +89,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter); //154
+app.use('/api/v1/bookings', bookingRouter); //210
 
 //111
 app.all('*', (req, res, next) => {

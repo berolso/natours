@@ -24,6 +24,9 @@ router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
 //193
 router.get('/me', authController.protect, viewsController.getAccount);
 
+//214
+router.get('/my-tours', authController.protect, viewsController.getMyTours);
+
 //194
 router.post(
   '/submit-user-data',

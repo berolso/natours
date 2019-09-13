@@ -1094,8 +1094,8 @@ body {
   max-width: 120rem;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 7rem;
+  grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+  grid-gap: 2.5rem;
 }
 
 .card {

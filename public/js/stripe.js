@@ -4,11 +4,10 @@ import { showAlert } from './alerts';
 const stripe = Stripe('pk_test_CmSGPBteniyIdpW7GLHQz7yg00KQPm8X11'); //211
 
 export const bookTour = async tourId => {
-
-    try {
+  try {
     // 1) Get checkout session from api
     const session = await axios(
-      `http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`
+      `/api/v1/bookings/checkout-session/${tourId}` //http://127.0.0.1:3000
     );
     // 2) create checkout form + change credit card
     await stripe.redirectToCheckout({

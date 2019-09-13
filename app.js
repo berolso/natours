@@ -6,6 +6,7 @@ const helmet = require('helmet'); //143
 const mongoSanitize = require('express-mongo-sanitize'); //144
 const xss = require('xss-clean'); //144
 const hpp = require('hpp'); //145
+const compression = require('compression'); //221
 
 const AppError = require('./utils/appError'); //114
 const globalErrorHandler = require('./controllers/errorController'); //114
@@ -69,6 +70,8 @@ app.use(
   })
 );
 
+//221
+app.use(compression())
 //66 serving static files 175
 // app.use(express.static(`${__dirname}/public`));
 //175

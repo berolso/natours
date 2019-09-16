@@ -12,7 +12,7 @@ module.exports = class Email {
   }
 
   newTransport() {
-    if (process.env.NODE_ENV === 'production') {
+    // if (process.env.NODE_ENV === 'production') {
       //sendgrid 208
       return nodemailer.createTransport({
         service: 'SendGrid',
@@ -21,16 +21,16 @@ module.exports = class Email {
           pass: process.env.SENDGRID_PASSWORD
         }
       });
-    }
-    return nodemailer.createTransport({
-      // service: 'Gmail',
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD
-      }
-    });
+    // }
+    // return nodemailer.createTransport({
+    //   // service: 'Gmail',
+    //   host: process.env.EMAIL_HOST,
+    //   port: process.env.EMAIL_PORT,
+    //   auth: {
+    //     user: process.env.EMAIL_USERNAME,
+    //     pass: process.env.EMAIL_PASSWORD
+    //   }
+    // });
   }
   //send the actual email
   async send(template, subject) {

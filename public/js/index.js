@@ -2,6 +2,7 @@
 import '@babel/polyfill'; //190
 import { displayMap } from './mapbox'; //190
 import { login, logout } from './login'; //190
+import { signup } from './signup'; // mine
 import { updateSettings } from './updateSettings'; //195, 196
 import { bookTour } from './stripe'; //211
 
@@ -9,6 +10,7 @@ import { bookTour } from './stripe'; //211
 // 190
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login'); //194
+const signupForm = document.querySelector('.form--signup'); //mine
 const logOutBtn = document.querySelector('.nav__el--logout'); //191
 const userDataForm = document.querySelector('.form-user-data'); //195
 const userPasswordForm = document.querySelector('.form-user-password'); //196
@@ -27,6 +29,19 @@ if (loginForm) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     login(email, password);
+  });
+}
+
+//mine
+if (signupForm) {
+  signupForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    signup(firstName, lastName, email, password, confirmPassword);
   });
 }
 

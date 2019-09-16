@@ -20,6 +20,9 @@ const cookieParser = require('cookie-parser'); //188
 //53
 const app = express();
 
+//223
+app.enable('trust proxy')
+
 //175
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));

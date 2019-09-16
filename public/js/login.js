@@ -31,7 +31,7 @@ export const logout = async () => {
       method: 'GET',
       url: '/api/v1/users/logout' //http://127.0.0.1:3000
     });
-    if ((res.data.status = 'success')) location.reload(true);
+    if (res.data.status = 'success') location.assign('/');// my redirect to '/' instead of reload which gives error when no longer logged in
   } catch (err) {
     showAlert('error', 'Error logging out: Try again.');
   }

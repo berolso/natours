@@ -5,6 +5,7 @@ import { login, logout } from './login'; //190
 import { signup } from './signup'; // mine
 import { updateSettings } from './updateSettings'; //195, 196
 import { bookTour } from './stripe'; //211
+import { showAlert } from './alerts'; //226
 
 //dom elements
 // 190
@@ -85,3 +86,7 @@ if (bookBtn)
     const { tourId } = e.target.dataset;
     bookTour(tourId);
   });
+
+//226
+const alert = document.querySelector('body').dataset.alert;
+if (alert) showAlert('success', alertMessage, 20);

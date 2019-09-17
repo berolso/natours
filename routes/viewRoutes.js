@@ -5,12 +5,15 @@ const bookingController = require('../controllers/bookingController'); //213
 
 const router = express.Router(); //180
 
+//226
+router.use(viewsController.alerts);
+
 ////ROUTES
 
 //179, 180, 193, 213
 router.get(
   '/',
-  bookingController.createBookingCheckout,
+  // bookingController.createBookingCheckout, 226
   authController.isLoggedIn,
   viewsController.getOverview
 );

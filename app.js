@@ -7,7 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize'); //144
 const xss = require('xss-clean'); //144
 const hpp = require('hpp'); //145
 const compression = require('compression'); //221
-const cors = require('cors')//225
+const cors = require('cors'); //225
 
 const AppError = require('./utils/appError'); //114
 const globalErrorHandler = require('./controllers/errorController'); //114
@@ -15,6 +15,7 @@ const tourRouter = require('./routes/tourRoutes'); //63
 const userRouter = require('./routes/userRoutes'); //63
 const reviewRouter = require('./routes/reviewRoutes'); //154
 const bookingRouter = require('./routes/bookingRoutes'); //210
+const bookingController = require('./controllers/bookingController'); //226
 const viewRouter = require('./routes/viewRoutes'); //180
 const cookieParser = require('cookie-parser'); //188
 
@@ -22,7 +23,7 @@ const cookieParser = require('cookie-parser'); //188
 const app = express();
 
 //223
-app.enable('trust proxy')
+app.enable('trust proxy');
 
 //175
 app.set('view engine', 'pug');
@@ -40,7 +41,7 @@ app.use(cors()); //entire sites
 // }))
 
 //complex
-app.options('*', cors())
+app.options('*', cors());
 // app.options('/api/v1/tours/:id', cors())
 
 //175
@@ -63,6 +64,9 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!'
 });
 app.use('/api', limiter);
+
+//226
+app.post('/webhook-checkout', express.raw({type: 'application/json'}), bookingController.webhookCheckout);
 
 //53, 143 body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
@@ -89,7 +93,7 @@ app.use(
 );
 
 //221
-app.use(compression())
+app.use(compression());
 //66 serving static files 175
 // app.use(express.static(`${__dirname}/public`));
 //175
